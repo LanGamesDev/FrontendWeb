@@ -1,4 +1,4 @@
-type Word = {
-    id: number;
-    content: string;
+export type Word = {
+    id?: number;
+    content?: string;
 }
