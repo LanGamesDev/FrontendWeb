@@ -5,7 +5,11 @@ import { classNames } from 'primereact/utils';
 import insertOneWord from '../../services/words/insertOneWord';
 import { Word } from '../../types/words/Word';
 
-const FormWordMaintenance = () => {
+interface FormWordMaintenanceProps {
+    setWords: (data: any) => void;
+}
+
+const FormWordMaintenance: React.FC<FormWordMaintenanceProps> = ({setWords}) => {
 
     const formik = useFormik({
         initialValues: {
@@ -29,7 +33,8 @@ const FormWordMaintenance = () => {
 
     const createWord = async (word: Word) => {
         try {
-            const data = await insertOneWord(word);
+            const data: Word = await insertOneWord(word);
+            setWords((oldWords: Word[])=>{return [...oldWords, data]})
 
         } catch (error) {
             console.error("Error getting words:", error);
