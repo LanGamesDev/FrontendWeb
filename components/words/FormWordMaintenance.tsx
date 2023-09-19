@@ -2,38 +2,43 @@ import { useFormik } from 'formik';
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
+import insertOneWord from '../../services/words/insertOneWord';
+import { Word } from '../../types/words/Word';
 
 const FormWordMaintenance = () => {
 
-    interface FormValues {
-        value: string;
-    }
-
-    interface FormErrors {
-        value?: string;
-    }
-
     const formik = useFormik({
         initialValues: {
-            value: ''
+            id: 0,
+            content: ''
         },
         validate: (data) => {
-            let errors: FormErrors = {};
+            let errors: Word = {};
 
-            if (!data.value) {
-                errors.value = 'Name - Surname is required.';
+            if (!data.content) {
+                errors.content = 'Content is required.';
             }
 
             return errors;
         },
-        onSubmit: (data) => {
+        onSubmit: async (data) => {
+            await createWord(data)
             formik.resetForm();
         }
     });
 
-    const isFormFieldInvalid = (name: keyof FormValues) => !!(formik.touched[name] && formik.errors[name]);
+    const createWord = async (word: Word) => {
+        try {
+            const data = await insertOneWord(word);
 
-    const getFormErrorMessage = (name: keyof FormValues) => {
+        } catch (error) {
+            console.error("Error getting words:", error);
+        }
+    };
+
+    const isFormFieldInvalid = (name: keyof Word) => !!(formik.touched[name] && formik.errors[name]);
+
+    const getFormErrorMessage = (name: keyof Word) => {
         return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
     };
 
@@ -42,17 +47,17 @@ const FormWordMaintenance = () => {
             <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
                 <span className="p-float-label">
                     <InputText
-                        id="value"
-                        name="value"
-                        value={formik.values.value}
+                        id="content"
+                        name="content"
+                        value={formik.values.content}
                         onChange={(e) => {
-                            formik.setFieldValue('value', e.target.value);
+                            formik.setFieldValue('content', e.target.value);
                         }}
-                        className={classNames({ 'p-invalid': isFormFieldInvalid('value') })}
+                        className={classNames({ 'p-invalid': isFormFieldInvalid('content') })}
                     />
                     <label htmlFor="input_value">Name - Surname</label>
                 </span>
-                {getFormErrorMessage('value')}
+                {getFormErrorMessage('content')}
                 <Button type="submit" label="Submit" />
             </form>
         </div>
