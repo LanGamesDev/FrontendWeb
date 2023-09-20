@@ -15,7 +15,8 @@ import FormWordMaintenanceDialog from "../../components/words/maintenance/FormWo
 
 export default function WordsPage() {
     const [words, setWords] = useState<Word[]>([]);
-    const [visible, setVisible] = useState<boolean>(false);
+    const [visible, setWordDialogVisible] = useState<boolean>(false);
+    const [wordForm, setWordForm] = useState<Word>();
 
     const fetchData = async () => {
         try {
@@ -34,10 +35,10 @@ export default function WordsPage() {
     return (
         <>
             <div className="container">
-                <FormWordMaintenanceToolbar selectedProducts={[]} setVisible={setVisible}></FormWordMaintenanceToolbar>
-                <FormWordMaintenanceList setWords={setWords} words={words}></FormWordMaintenanceList>
+                <FormWordMaintenanceToolbar selectedProducts={[]} setWordDialogVisible={setWordDialogVisible}></FormWordMaintenanceToolbar>
+                <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceList>
             </div>
-            <FormWordMaintenanceDialog visible={visible} setVisible={setVisible} setWords={setWords}></FormWordMaintenanceDialog>
+            <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm}></FormWordMaintenanceDialog>
         </>
     );
 }
