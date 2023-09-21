@@ -8,9 +8,10 @@ interface FormWordDeleteDialogProps {
     wordForm?: Word
     setDeleteWordDialogVisible: (data: boolean) => void
     setWords: (data: any) => void
+    toast: any
 }
 
-const FormWordDeleteDialog: React.FC<FormWordDeleteDialogProps> = ({deleteWordDialogVisible, wordForm, setDeleteWordDialogVisible, setWords}) => {   
+const FormWordDeleteDialog: React.FC<FormWordDeleteDialogProps> = ({deleteWordDialogVisible, wordForm, setDeleteWordDialogVisible, setWords, toast}) => {   
     console.log(wordForm);
     
 
@@ -24,6 +25,7 @@ const FormWordDeleteDialog: React.FC<FormWordDeleteDialogProps> = ({deleteWordDi
             return _words.filter((_word) => _word.id !== data.id);
         });
         setDeleteWordDialogVisible(false);
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
 
     const deleteWordDialogFooter = (
