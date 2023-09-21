@@ -12,10 +12,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import getAllWords from "../../services/words/getAllWords";
 import FormWordMaintenanceToolbar from "../../components/words/maintenance/FormWordMaintenanceToolbar";
 import FormWordMaintenanceDialog from "../../components/words/maintenance/FormWordMaintenanceDialog";
+import FormWordDeleteDialog from "../../components/words/maintenance/FormWordDeleteDialog";
 
 export default function WordsPage() {
     const [words, setWords] = useState<Word[]>([]);
     const [visible, setWordDialogVisible] = useState<boolean>(false);
+    const [deleteWordDialogVisible, setDeleteWordDialogVisible] = useState<boolean>(false);
+
     const [wordForm, setWordForm] = useState<Word>();
 
     const fetchData = async () => {
@@ -35,10 +38,11 @@ export default function WordsPage() {
     return (
         <>
             <div className="container">
-                <FormWordMaintenanceToolbar selectedProducts={[]} setWordDialogVisible={setWordDialogVisible}></FormWordMaintenanceToolbar>
-                <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceList>
+                <FormWordMaintenanceToolbar selectedWords={[]} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceToolbar>
+                <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm} setDeleteWordDialogVisible={setDeleteWordDialogVisible}></FormWordMaintenanceList>
             </div>
             <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm}></FormWordMaintenanceDialog>
+            <FormWordDeleteDialog deleteWordDialogVisible={deleteWordDialogVisible} setWords={setWords} setDeleteWordDialogVisible={setDeleteWordDialogVisible} wordForm={wordForm}></FormWordDeleteDialog>
         </>
     );
 }
