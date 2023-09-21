@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.buttonTable {
+  padding: 0px;
+  width: 2rem;
+  height: 2rem;
+}
