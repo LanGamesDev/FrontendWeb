@@ -9,10 +9,11 @@ interface FormWordMaintenanceListProps {
     setWords: (data: any) => void,
     words: Word[],
     setWordDialogVisible: (data: boolean) => void,
+    setDeleteWordDialogVisible: (data: boolean) => void,
     setWordForm: (data: Word) => void,
 }
 
-const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWords, words,setWordDialogVisible,setWordForm}) => {
+const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWords, words,setWordDialogVisible,setWordForm,setDeleteWordDialogVisible}) => {
 
     useEffect(() => {
 
@@ -32,7 +33,8 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
     const buttonsTemplate = (rowData: Word) => {
         return (
             <>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editWord(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2 buttonTable" size="small" onClick={() => editWord(rowData)}/>
+                <Button icon="pi pi-trash" rounded outlined className="buttonTable" severity="danger" size="small" onClick={() => confirmDeleteWord(rowData)} />
             </>
         );
     };
@@ -42,8 +44,13 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
         setWordDialogVisible(true);
     };
 
+    const confirmDeleteWord = (word: Word) => {
+        setWordForm({...word});
+        setDeleteWordDialogVisible(true);
+    };
+
     return (
-        <DataTable value={words} tableStyle={{ minWidth: '50rem' }}>
+        <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"}>
             <Column field="id" header="ID"></Column>
             <Column field="content" header="Content"></Column>
             <Column body={buttonsTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
