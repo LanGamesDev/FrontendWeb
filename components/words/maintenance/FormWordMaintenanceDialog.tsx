@@ -13,9 +13,10 @@ interface FormWordMaintenanceDialogProps {
     setWordDialogVisible: (data: boolean) => void,
     visible: boolean
     wordForm?: Word
+    toast: any
 }
 
-const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm}) => {
+const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast}) => {
 
     const formik = useFormik({
         initialValues: {
@@ -54,7 +55,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         try {
             const data: Word = await insertOneWord(word);
             setWords((oldWords: Word[])=>{return [...oldWords, data]})
-
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
         } catch (error) {
             console.error("Error getting words:", error);
         }
@@ -68,6 +69,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                 oldWords[index] = data;
                 return [...oldWords]
             })
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
         } catch (error) {
             console.error("Error getting words:", error);

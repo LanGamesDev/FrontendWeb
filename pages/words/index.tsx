@@ -44,7 +44,7 @@ const WordsPage = () => {
                 <FormWordMaintenanceToolbar selectedWords={[]} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceToolbar>
                 <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm} setDeleteWordDialogVisible={setDeleteWordDialogVisible}></FormWordMaintenanceList>
             </div>
-            <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm}></FormWordMaintenanceDialog>
+            <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm} toast={toast}></FormWordMaintenanceDialog>
             <FormWordDeleteDialog deleteWordDialogVisible={deleteWordDialogVisible} setWords={setWords} setDeleteWordDialogVisible={setDeleteWordDialogVisible} toast={toast} wordForm={wordForm}></FormWordDeleteDialog>
         </>
     );
