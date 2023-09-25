@@ -33,10 +33,17 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             return errors;
         },
         onSubmit: async (data) => {
+            let result: boolean = false;
             if(data.id === 0){
-                await createWord(data)
+                result = await createWord(data)
+                if(result === true){
+                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+                }
             }else{
-                await updateWord(data)
+                result = await updateWord(data)
+                if(result === true){
+                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+                }
             }
             formik.resetForm();
         }
@@ -55,12 +62,11 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         try {
             const data: Word = await insertOneWord(word);
             setWords((oldWords: Word[])=>{return [...oldWords, data]})
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             return true
         } catch (error) {
             console.error("Error getting words:", error);
-            return false
         }
+        return false
     };
 
     const updateWord = async (word: Word): Promise<boolean> => {
@@ -71,12 +77,11 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                 oldWords[index] = data;
                 return [...oldWords]
             })
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
             return true
         } catch (error) {
             console.error("Error getting words:", error);
-            return false
         }
+        return false
     };
 
     const isFormFieldInvalid = (name: keyof Word) => !!(formik.touched[name] && formik.errors[name]);
