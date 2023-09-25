@@ -12,8 +12,6 @@ interface FormWordDeleteDialogProps {
 }
 
 const FormWordDeleteDialog: React.FC<FormWordDeleteDialogProps> = ({deleteWordDialogVisible, wordForm, setDeleteWordDialogVisible, setWords, toast}) => {   
-    console.log(wordForm);
-    
 
     const hideDeleteWordDialog = () => {
         setDeleteWordDialogVisible(false);
