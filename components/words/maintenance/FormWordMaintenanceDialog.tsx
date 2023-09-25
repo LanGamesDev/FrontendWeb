@@ -51,17 +51,19 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         }
     }, [wordForm, formik]);
 
-    const createWord = async (word: Word) => {
+    const createWord = async (word: Word): Promise<boolean> => {
         try {
             const data: Word = await insertOneWord(word);
             setWords((oldWords: Word[])=>{return [...oldWords, data]})
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+            return true
         } catch (error) {
             console.error("Error getting words:", error);
+            return false
         }
     };
 
-    const updateWord = async (word: Word) => {
+    const updateWord = async (word: Word): Promise<boolean> => {
         try {
             const data: Word = await updateOneWord(word);
             setWords((oldWords: Word[])=>{
@@ -70,9 +72,10 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                 return [...oldWords]
             })
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-
+            return true
         } catch (error) {
             console.error("Error getting words:", error);
+            return false
         }
     };
 
