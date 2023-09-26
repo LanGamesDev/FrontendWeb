@@ -9,7 +9,7 @@ const getAllWords = async(): Promise<Word[]> => {
 
         return words;
     } catch (error) {
-        console.error("Error al obtener las palabras:", error);
+        console.error("Error getting words: ", error);
         throw error;
     }
 }
