@@ -1,13 +1,13 @@
 import axios from "axios";
-import { Word } from "../../types/words/Word";
+import { Type } from "../../types/general/Type";
 
-const getAllTypes = async(): Promise<Word[]> => {
+const getAllTypes = async(): Promise<Type[]> => {
     try {
-        const words: Word[] = await axios.get('http://localhost:3001/api/types').then(resp => {
+        const types: Type[] = await axios.get('http://localhost:3001/api/types').then(resp => {
             return resp.data;
         });
 
-        return words;
+        return types;
     } catch (error) {
         console.error("Error getting types:", error);
         throw error;
