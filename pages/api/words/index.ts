@@ -9,16 +9,18 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
 
+  const urlBaseApi = process.env.URL_BASE_API;  
+
   if (req.method === 'POST') {
     
-    const words: Word[] = await axios.post('http://localhost:8080/words', req.body).then(resp => {
+    const words: Word[] = await axios.post(`${urlBaseApi}/words`, req.body).then(resp => {
       return resp.data;
     });
     res.status(200).json(words)
 
   } else if(req.method === 'GET') {
 
-    const words: Word[] = await axios.get('http://localhost:8080/words').then(resp => {
+    const words: Word[] = await axios.get(`${urlBaseApi}/words`).then(resp => {
       return resp.data;
     });
     res.status(200).json(words)
