@@ -3,3 +3,7 @@
   width: 2rem !important;
   height: 2rem !important;
 }
+
+.accordionTab a {
+  padding: 0.6rem 1rem !important;
+}
