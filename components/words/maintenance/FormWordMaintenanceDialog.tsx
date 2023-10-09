@@ -7,6 +7,8 @@ import insertOneWord from '../../../services/words/insertOneWord';
 import { Word } from '../../../types/words/Word';
 import {useEffect} from 'react';
 import updateOneWord from '../../../services/words/updateOneWord';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
 
 interface FormWordMaintenanceDialogProps {
     setWords: (data: any) => void,
@@ -123,6 +125,11 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                     </div>
                 </form>
             </div>
+            <Accordion>
+                <AccordionTab header="Translates" className="accordionTab">
+                    <AccordionTranslate toast={toast}></AccordionTranslate>
+                </AccordionTab>
+            </Accordion>
         </Dialog>
     )
 }
