@@ -9,7 +9,7 @@ const updateOneWord = async(word: Word): Promise<Word> => {
 
         return updatedWord;
     } catch (error) {
-        console.error("Error al obtener las palabras:", error);
+        console.error("An error occurred while updating the word:", error);
         throw error;
     }
 }

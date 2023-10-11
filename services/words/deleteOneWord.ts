@@ -9,7 +9,7 @@ const deleteOneWord = async(word: Word): Promise<Word> => {
 
         return deletedWords;
     } catch (error) {
-        console.error("Error deleting words:", error);
+        console.error("An error occurred while deleting the word:", error);
         throw error;
     }
 }

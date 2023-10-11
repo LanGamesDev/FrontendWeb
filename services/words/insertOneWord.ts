@@ -9,7 +9,7 @@ const insertOneWord = async(word: Word): Promise<Word> => {
 
         return newWord;
     } catch (error) {
-        console.error("Error al obtener las palabras:", error);
+        console.error("An error occurred while saving the word:", error);
         throw error;
     }
 }
