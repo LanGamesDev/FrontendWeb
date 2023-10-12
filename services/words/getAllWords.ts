@@ -12,10 +12,11 @@ const getAllWords = async(): Promise<MessageService> => {
             throw error;
         });
 
-        return {type: MSG_TYPE_SUCCESS, data: words};
-    } catch (error) {
-        console.error("An error occurred while fetching the words: ", error);
-        return {type: MSG_TYPE_ERROR, data: null};
+        return {type: MSG_TYPE_SUCCESS, data: words, message: ''};
+    } catch (error: any) {
+        const errorMessage: string = "An error occurred while fetching the words: " + error.message;
+        console.error(errorMessage);
+        return {type: MSG_TYPE_ERROR, data: null, message: errorMessage};
     }
 }
 
