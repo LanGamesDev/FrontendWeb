@@ -14,6 +14,8 @@ import FormWordMaintenanceToolbar from "../../components/words/maintenance/FormW
 import FormWordMaintenanceDialog from "../../components/words/maintenance/FormWordMaintenanceDialog";
 import FormWordDeleteDialog from "../../components/words/maintenance/FormWordDeleteDialog";
 import { Toast } from 'primereact/toast';
+import { MessageService } from "../../types/general/MessageService";
+import { MSG_TYPE_SUCCESS } from "../../constants/general/ConstantsRoutes";
 
 const WordsPage = () => {
     const [words, setWords] = useState<Word[]>([]);
@@ -21,14 +23,24 @@ const WordsPage = () => {
     const [deleteWordDialogVisible, setDeleteWordDialogVisible] = useState<boolean>(false);
 
     const [wordForm, setWordForm] = useState<Word>();
-    const toast = useRef(null);
+    const toast: any = useRef(null);
 
     const fetchData = async () => {
-        try {
-            const data = await getAllWords();
-            setWords(data);
-        } catch (error) {
-            console.error("Error getting words:", error);
+        try{
+            const response: MessageService = await getAllWords();
+            console.log(response);
+            
+            if(response.type === MSG_TYPE_SUCCESS){
+                setWords(response.data);
+            }
+            else{
+                console.log(response.message);
+                
+                toast.current?.show({ severity: 'error', summary: 'Error', detail: response.message, life: 3000 });
+            }
+            console.log(222);
+        }catch(error){
+
         }
     };
     

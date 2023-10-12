@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import getAllWords from "../../../services/words/getAllWords";
 import { Word } from "../../../types/words/Word";
 import { Button } from "primereact/button";
+import { MessageService } from "../../../types/general/MessageService";
+import { MSG_TYPE_SUCCESS } from "../../../constants/general/ConstantsRoutes";
 
 interface FormWordMaintenanceListProps {
     setWords: (data: any) => void,
@@ -18,11 +20,20 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
     useEffect(() => {
 
         const fetchData = async () => {
-            try {
-                const data = await getAllWords();
-                setWords(data);
-            } catch (error) {
-                console.error("Error getting words:", error);
+            try{
+                const response: MessageService = await getAllWords();
+                console.log(response);
+                
+                if(response.type === MSG_TYPE_SUCCESS){
+                    setWords(response.data);
+                }
+                else{
+                    setWords([]);
+                    // toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+                }
+                console.log(222);
+            }catch(error){
+    
             }
         };
 
