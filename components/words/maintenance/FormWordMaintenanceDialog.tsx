@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 import insertOneWord from '../../../services/words/insertOneWord';
 import { Word } from '../../../types/words/Word';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
@@ -20,6 +20,7 @@ interface FormWordMaintenanceDialogProps {
 
 const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast}) => {
 
+    const [typeForm, setTypeForm] = useState("");
     const formik = useFormik({
         initialValues: {
             id: 0,
@@ -58,6 +59,14 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                 content: wordForm.content || ''
             });
         }
+
+        if(wordForm && wordForm.id! > 0){
+            setTypeForm("E");
+        }else{
+            setTypeForm("N");
+        }
+
+        console.log(wordForm)
     }, [wordForm, formik]);
 
     const createWord = async (word: Word): Promise<boolean> => {
@@ -111,7 +120,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     
 
     return (
-        <Dialog header="Header" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => closeDialog()} footer={productDialogFooter}>
+        <Dialog header={(typeForm === "E") ? "Edit Word" : "Create word"} visible={visible} maximizable style={{ width: '50vw' }} onHide={() => closeDialog()} footer={productDialogFooter}>
             <div className="flex justify-content-center">
                 <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
                     <div className="field">
