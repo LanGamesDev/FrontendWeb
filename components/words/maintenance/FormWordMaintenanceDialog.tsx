@@ -129,12 +129,12 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                         </label>
                         <InputText id="content" value={formik.values?.content} onChange={(e) => {
                                     formik.setFieldValue('content', e.target.value);
-                                }} required autoFocus className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
+                                }} required autoFocus autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
                         {getFormErrorMessage('content')}
                     </div>
                 </form>
             </div>
-            <Accordion>
+            <Accordion className="accordionSmall">
                 <AccordionTab header="Translates" className="accordionTab">
                     <AccordionTranslate toast={toast}></AccordionTranslate>
                 </AccordionTab>

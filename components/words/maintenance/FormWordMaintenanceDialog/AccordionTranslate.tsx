@@ -52,8 +52,7 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast}) => {
                     </label>
                     <InputText id="content" value={translateForm.values?.content} onChange={(e) => {
                                 translateForm.setFieldValue('content', e.target.value);
-                            }} required autoFocus className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
-                    {getFormErrorMessage('content')}
+                            }} required autoFocus autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
                 </div>
             </form>
         </div>
