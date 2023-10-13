@@ -65,8 +65,6 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         }else{
             setTypeForm("N");
         }
-
-        console.log(wordForm)
     }, [wordForm, formik]);
 
     const createWord = async (word: Word): Promise<boolean> => {

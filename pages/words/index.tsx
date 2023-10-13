@@ -34,8 +34,6 @@ const WordsPage = () => {
                 setWords(response.data);
             }
             else{
-                console.log(response.message);
-                
                 toast.current?.show({ severity: 'error', summary: 'Error', detail: response.message, life: 3000 });
             }
             console.log(222);
