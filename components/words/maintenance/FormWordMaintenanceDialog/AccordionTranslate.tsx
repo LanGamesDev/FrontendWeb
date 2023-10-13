@@ -10,10 +10,11 @@ import { Button } from 'primereact/button';
 
 interface AccordionTranslateProps {
     toast: any
+    setTranslates: any
+    translates: Translate[]
 }
 
-const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast}) => {
-    const [translates, setTranslates] = useState<Translate[]>([]);
+const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates}) => {
 
     const translateForm = useFormik({
         initialValues: {
@@ -61,7 +62,10 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast}) => {
     };
 
     const addTranslate = (data: Translate) => {
-        setTranslates((oldTranslates: Translate[])=>{return [...oldTranslates, data]})
+        setTranslates((oldTranslates: Translate[])=>{
+            const newId: number = oldTranslates.length === 0 ? 0 : Math.max(...oldTranslates.map(tra => tra.id!))
+            return [...oldTranslates, {...data, id: newId+1}]
+        })
     };
 
     return (

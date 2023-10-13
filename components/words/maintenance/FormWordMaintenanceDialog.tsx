@@ -9,6 +9,7 @@ import {useEffect, useState} from 'react';
 import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
+import { Translate } from '../../../types/words/Translate';
 
 interface FormWordMaintenanceDialogProps {
     setWords: (data: any) => void,
@@ -21,6 +22,8 @@ interface FormWordMaintenanceDialogProps {
 const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast}) => {
 
     const [typeForm, setTypeForm] = useState("");
+    const [translates, setTranslates] = useState<Translate[]>([]);
+
     const formik = useFormik({
         initialValues: {
             id: 0,
@@ -134,7 +137,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             </div>
             <Accordion className="accordionSmall">
                 <AccordionTab header="Translates" className="accordionTab">
-                    <AccordionTranslate toast={toast}></AccordionTranslate>
+                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates}></AccordionTranslate>
                 </AccordionTab>
             </Accordion>
         </Dialog>
