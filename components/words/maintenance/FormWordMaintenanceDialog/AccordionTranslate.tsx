@@ -7,6 +7,7 @@ import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { STATE_TYPE_EDIT, STATE_TYPE_NEW } from '../../../../constants/general/ConstantsRoutes';
 
 interface AccordionTranslateProps {
     toast: any
@@ -15,11 +16,14 @@ interface AccordionTranslateProps {
 }
 
 const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates}) => {
+    const [typeStateForm, setTypeStateForm] = useState(STATE_TYPE_NEW);
 
     const translateForm = useFormik({
         initialValues: {
             id: 0,
-            content: ''
+            content: '',
+            //grid data
+            typeState: STATE_TYPE_NEW
         },
         validate: (data) => {
             let errors: Translate = {};
@@ -32,7 +36,6 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
         },
         onSubmit: async (data) => {
             let result: boolean = false;
-            console.log(data)
             addTranslate(data);
             translateForm.resetForm();
         }
@@ -55,17 +58,43 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
 
     const editTranslate = (rowData: Translate) => {
 
+        const index = translates.findIndex(word => word.id === rowData.id);
+        const toEditTranslate = translates[index];
+
+        if (index >= 0) {
+            translateForm.setValues({
+                id: toEditTranslate.id!,
+                content: toEditTranslate.content!,
+                typeState: toEditTranslate.typeState!
+            });
+        };
+
+        setTypeStateForm(STATE_TYPE_EDIT);
+
     };
 
     const deleteTranslate = (rowData: Translate) => {
-
+        setTranslates((_translates: Translate[])=>{
+            return _translates.filter((_translate) => _translate.id !== rowData.id);
+        });
     };
 
     const addTranslate = (data: Translate) => {
-        setTranslates((oldTranslates: Translate[])=>{
-            const newId: number = oldTranslates.length === 0 ? 0 : Math.max(...oldTranslates.map(tra => tra.id!))
-            return [...oldTranslates, {...data, id: newId+1}]
-        })
+
+        if(typeStateForm === STATE_TYPE_NEW){
+            setTranslates((oldTranslates: Translate[])=>{
+                const newId: number = oldTranslates.length === 0 ? 0 : Math.max(...oldTranslates.map(tra => tra.id!))
+                return [...oldTranslates, {...data, id: newId+1}]
+            })
+        }else{
+            setTranslates((oldTranslates: Translate[])=>{
+                const index = translates.findIndex(translate => translate.id === data.id);
+                oldTranslates[index] = data;
+                return [...oldTranslates]
+            })
+        }
+        setTypeStateForm(STATE_TYPE_NEW);
+        
     };
 
     return (
