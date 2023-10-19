@@ -104,7 +104,8 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
 
     const closeDialog = () => {
         formik.resetForm();
-        setWordDialogVisible(false)
+        setWordDialogVisible(false);
+        setTranslates([]);
     }
 
     const saveWord = async() => {
@@ -135,7 +136,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                     </div>
                 </form>
             </div>
-            <Accordion className="accordionSmall">
+            <Accordion className="accordionSmall" activeIndex={0}>
                 <AccordionTab header="Translates" className="accordionTab">
                     <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates}></AccordionTranslate>
                 </AccordionTab>
