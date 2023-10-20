@@ -1,5 +1,5 @@
 import { Dialog } from 'primereact/dialog';
-import { useFormik } from 'formik';
+import { FormikConfig, useFormik } from 'formik';
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
@@ -10,6 +10,7 @@ import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
 import { Translate } from '../../../types/words/Translate';
+import { STATE_TYPE_EDIT } from '../../../constants/general/ConstantsRoutes';
 
 interface FormWordMaintenanceDialogProps {
     setWords: (data: any) => void,
@@ -27,7 +28,8 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     const formik = useFormik({
         initialValues: {
             id: 0,
-            content: ''
+            content: '',
+            translates: [] as Translate[]
         },
         validate: (data) => {
             let errors: Word = {};
@@ -51,7 +53,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                     toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
                 }
             }
-            formik.resetForm();
+            console.log(data)
         }
     });
 
@@ -59,8 +61,15 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         if (wordForm && wordForm.id !== formik.values.id) {
             formik.setValues({
                 id: wordForm.id || 0,
-                content: wordForm.content || ''
+                content: wordForm.content || '',
+                translates: wordForm.translates || []
             });
+
+            setTranslates(wordForm.translates!.map(translate => {
+                translate.typeState = STATE_TYPE_EDIT;
+                translate.modified = false;
+                return translate;
+            }));
         }
 
         if(wordForm && wordForm.id! > 0){
@@ -69,6 +78,8 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             setTypeForm("N");
         }
     }, [wordForm, formik]);
+
+
 
     const createWord = async (word: Word): Promise<boolean> => {
         try {
@@ -99,7 +110,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     const isFormFieldInvalid = (name: keyof Word) => !!(formik.touched[name] && formik.errors[name]);
 
     const getFormErrorMessage = (name: keyof Word) => {
-        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
+        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]?.toString()}</small> : <small className="p-error">&nbsp;</small>;
     };
 
     const closeDialog = () => {
@@ -110,7 +121,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
 
     const saveWord = async() => {
         await formik.submitForm();
-        setWordDialogVisible(false);
+        closeDialog();
     }
     
     const productDialogFooter = (
@@ -138,7 +149,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             </div>
             <Accordion className="accordionSmall" activeIndex={0}>
                 <AccordionTab header="Translates" className="accordionTab">
-                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates}></AccordionTranslate>
+                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates} formikWord={formik}></AccordionTranslate>
                 </AccordionTab>
             </Accordion>
         </Dialog>
