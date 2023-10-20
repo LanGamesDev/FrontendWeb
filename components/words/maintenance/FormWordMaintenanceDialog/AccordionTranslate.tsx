@@ -13,9 +13,10 @@ interface AccordionTranslateProps {
     toast: any
     setTranslates: any
     translates: Translate[]
+    formikWord: any
 }
 
-const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates}) => {
+const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates, formikWord}) => {
     const [typeStateForm, setTypeStateForm] = useState(STATE_TYPE_NEW);
 
     const translateForm = useFormik({
@@ -75,7 +76,9 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
 
     const deleteTranslate = (rowData: Translate) => {
         setTranslates((_translates: Translate[])=>{
-            return _translates.filter((_translate) => _translate.id !== rowData.id);
+            const newTranslates: Translate[] = _translates.filter((_translate) => _translate.id !== rowData.id);
+            formikWord.setFieldValue('translates', newTranslates);
+            return newTranslates;
         });
     };
 
@@ -83,13 +86,19 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
 
         if(typeStateForm === STATE_TYPE_NEW){
             setTranslates((oldTranslates: Translate[])=>{
-                const newId: number = oldTranslates.length === 0 ? 0 : Math.max(...oldTranslates.map(tra => tra.id!))
-                return [...oldTranslates, {...data, id: newId+1}]
+                const newId: number = oldTranslates.length === 0 ? 0 : Math.max(...oldTranslates.map(tra => tra.id!));
+                const newTranslates: Translate[] = [...oldTranslates, {...data, id: newId+1}];
+                formikWord.setFieldValue('translates', newTranslates)
+                return newTranslates;
             })
         }else{
             setTranslates((oldTranslates: Translate[])=>{
                 const index = translates.findIndex(translate => translate.id === data.id);
+                if (index < 0){
+                    return [...oldTranslates];
+                }
                 oldTranslates[index] = data;
+                formikWord.setFieldValue('translates', oldTranslates)
                 return [...oldTranslates]
             })
         }
