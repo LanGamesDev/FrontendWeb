@@ -31,7 +31,6 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
                     setWords([]);
                     // toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
                 }
-                console.log(222);
             }catch(error){
     
             }

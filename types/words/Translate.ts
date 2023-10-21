@@ -4,4 +4,5 @@ export type Translate = {
 
     //Grid data
     typeState?: number; 
+    modified?: boolean;
 }
