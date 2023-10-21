@@ -14,9 +14,10 @@ interface AccordionTranslateProps {
     setTranslates: any
     translates: Translate[]
     formikWord: any
+    deletedTranslates: Translate[]
 }
 
-const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates, formikWord}) => {
+const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates, formikWord, deletedTranslates}) => {
     const [typeStateForm, setTypeStateForm] = useState(STATE_TYPE_NEW);
 
     const translateForm = useFormik({
@@ -24,7 +25,8 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
             id: 0,
             content: '',
             //grid data
-            typeState: STATE_TYPE_NEW
+            typeState: STATE_TYPE_NEW,
+            modified: false
         },
         validate: (data) => {
             let errors: Translate = {};
@@ -66,7 +68,8 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
             translateForm.setValues({
                 id: toEditTranslate.id!,
                 content: toEditTranslate.content!,
-                typeState: toEditTranslate.typeState!
+                typeState: toEditTranslate.typeState!,
+                modified: toEditTranslate.modified!
             });
         };
 
@@ -75,6 +78,11 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
     };
 
     const deleteTranslate = (rowData: Translate) => {
+        if(rowData.typeState === STATE_TYPE_EDIT){
+            deletedTranslates.push(rowData)
+            formikWord.setFieldValue('deletedTranslates', deletedTranslates);
+        }
+        
         setTranslates((_translates: Translate[])=>{
             const newTranslates: Translate[] = _translates.filter((_translate) => _translate.id !== rowData.id);
             formikWord.setFieldValue('translates', newTranslates);
@@ -93,6 +101,7 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
             })
         }else{
             setTranslates((oldTranslates: Translate[])=>{
+                data.modified = true;
                 const index = translates.findIndex(translate => translate.id === data.id);
                 if (index < 0){
                     return [...oldTranslates];

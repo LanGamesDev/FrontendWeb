@@ -28,7 +28,6 @@ const WordsPage = () => {
     const fetchData = async () => {
         try{
             const response: MessageService = await getAllWords();
-            console.log(response);
             
             if(response.type === MSG_TYPE_SUCCESS){
                 setWords(response.data);
@@ -36,7 +35,6 @@ const WordsPage = () => {
             else{
                 toast.current?.show({ severity: 'error', summary: 'Error', detail: response.message, life: 3000 });
             }
-            console.log(222);
         }catch(error){
 
         }
@@ -54,7 +52,7 @@ const WordsPage = () => {
                 <FormWordMaintenanceToolbar selectedWords={[]} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceToolbar>
                 <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm} setDeleteWordDialogVisible={setDeleteWordDialogVisible}></FormWordMaintenanceList>
             </div>
-            <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm} toast={toast}></FormWordMaintenanceDialog>
+            <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm} toast={toast} setWordForm={setWordForm}></FormWordMaintenanceDialog>
             <FormWordDeleteDialog deleteWordDialogVisible={deleteWordDialogVisible} setWords={setWords} setDeleteWordDialogVisible={setDeleteWordDialogVisible} toast={toast} wordForm={wordForm}></FormWordDeleteDialog>
         </>
     );
