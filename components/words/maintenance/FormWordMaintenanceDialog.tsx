@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
 import insertOneWord from '../../../services/words/insertOneWord';
 import { Word } from '../../../types/words/Word';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
@@ -17,19 +17,22 @@ interface FormWordMaintenanceDialogProps {
     setWordDialogVisible: (data: boolean) => void,
     visible: boolean
     wordForm?: Word
-    toast: any
+    toast: any,
+    setWordForm: (data: Word) => void
 }
 
-const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast}) => {
+const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast,setWordForm}) => {
 
     const [typeForm, setTypeForm] = useState("");
     const [translates, setTranslates] = useState<Translate[]>([]);
-
+    const deletedTranslates = useRef<Translate[]>([]);
+    
     const formik = useFormik({
         initialValues: {
             id: 0,
             content: '',
-            translates: [] as Translate[]
+            translates: [] as Translate[],
+            deletedTranslates: [] as Translate[]
         },
         validate: (data) => {
             let errors: Word = {};
@@ -53,7 +56,6 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                     toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
                 }
             }
-            console.log(data)
         }
     });
 
@@ -62,7 +64,8 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             formik.setValues({
                 id: wordForm.id || 0,
                 content: wordForm.content || '',
-                translates: wordForm.translates || []
+                translates: wordForm.translates || [],
+                deletedTranslates: []
             });
 
             setTranslates(wordForm.translates!.map(translate => {
@@ -85,26 +88,29 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         try {
             const data: Word = await insertOneWord(word);
             setWords((oldWords: Word[])=>{return [...oldWords, data]})
-            return true
+            return true;
         } catch (error) {
             console.error("Error getting words:", error);
         }
-        return false
+        return false;
     };
 
     const updateWord = async (word: Word): Promise<boolean> => {
         try {
             const data: Word = await updateOneWord(word);
+            
             setWords((oldWords: Word[])=>{
                 const index = oldWords.findIndex(word => word.id === data.id);
-                oldWords[index] = data;
-                return [...oldWords]
+                const newWords = [...oldWords];
+                newWords[index] = data;
+                
+                return newWords;
             })
-            return true
+            return true;
         } catch (error) {
             console.error("Error getting words:", error);
         }
-        return false
+        return false;
     };
 
     const isFormFieldInvalid = (name: keyof Word) => !!(formik.touched[name] && formik.errors[name]);
@@ -117,6 +123,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         formik.resetForm();
         setWordDialogVisible(false);
         setTranslates([]);
+        setWordForm({id: 0, content: ''});
     }
 
     const saveWord = async() => {
@@ -149,7 +156,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             </div>
             <Accordion className="accordionSmall" activeIndex={0}>
                 <AccordionTab header="Translates" className="accordionTab">
-                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates} formikWord={formik}></AccordionTranslate>
+                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates} formikWord={formik} deletedTranslates={deletedTranslates.current}></AccordionTranslate>
                 </AccordionTab>
             </Accordion>
         </Dialog>
