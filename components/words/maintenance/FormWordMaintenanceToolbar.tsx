@@ -13,7 +13,7 @@ interface FormWordMaintenanceToolbarProps {
 const FormWordMaintenanceToolbar: React.FC<FormWordMaintenanceToolbarProps> = ({selectedWords,setWordDialogVisible,setWordForm}) => {
 
     const openNew = () => {
-        setWordForm({id: 0, content: ''})
+        setWordForm({id: 0, content: '', translates: []})
         setWordDialogVisible(true);
     }
 

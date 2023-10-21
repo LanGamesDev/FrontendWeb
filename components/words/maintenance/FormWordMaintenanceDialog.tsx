@@ -123,7 +123,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         formik.resetForm();
         setWordDialogVisible(false);
         setTranslates([]);
-        setWordForm({id: 0, content: ''});
+        setWordForm({id: 0, content: '', translates: []});
     }
 
     const saveWord = async() => {
@@ -149,7 +149,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                         </label>
                         <InputText id="content" value={formik.values?.content} onChange={(e) => {
                                     formik.setFieldValue('content', e.target.value);
-                                }} required autoFocus autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
+                                }} required autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} autoFocus={true}/>
                         {getFormErrorMessage('content')}
                     </div>
                 </form>

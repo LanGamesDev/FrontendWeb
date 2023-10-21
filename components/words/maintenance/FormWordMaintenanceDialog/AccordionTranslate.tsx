@@ -125,7 +125,7 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
                     <div className="p-inputgroup flex-1">
                         <InputText id="content" value={translateForm.values?.content} onChange={(e) => {
                                 translateForm.setFieldValue('content', e.target.value);
-                            }} required autoFocus autoComplete='off' className={`p-inputtext-sm inputSmall ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
+                            }} required autoComplete='off' className={`p-inputtext-sm inputSmall ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} />
                         <Button icon="pi pi-plus" className="p-button-info buttonTable" size="small" type='submit' />
                     </div>
                 </div>
