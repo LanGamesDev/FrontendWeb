@@ -43,8 +43,8 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
     const buttonsTemplate = (rowData: Word) => {
         return (
             <>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2 buttonTable" size="small" onClick={() => editWord(rowData)}/>
-                <Button icon="pi pi-trash" rounded outlined className="buttonTable" severity="danger" size="small" onClick={() => confirmDeleteWord(rowData)} />
+                <Button icon="pi pi-pencil" outlined className="me-1 buttonTable" size="small" onClick={() => editWord(rowData)}/>
+                <Button icon="pi pi-trash" outlined className="buttonTable" severity="danger" size="small" onClick={() => confirmDeleteWord(rowData)} />
             </>
         );
     };
@@ -61,9 +61,9 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
 
     return (
         <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"}>
+            <Column body={buttonsTemplate} exportable={false} style={{ width: '8rem' }} header="Actions"></Column>
             <Column field="id" header="ID"></Column>
             <Column field="content" header="Content"></Column>
-            <Column body={buttonsTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
     );
 }
