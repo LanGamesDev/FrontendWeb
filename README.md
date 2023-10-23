@@ -42,3 +42,4 @@ List of requirements
 |001|WordCRUDImplementation|X|X|X|-|
 |002|TypeCRUDImplementation|X|X|X|-|
 |003|NewFieldTranslateWord|X|X|X|-|
+|004|FirstGameExactTranslate|X|X|X|-|
