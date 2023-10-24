@@ -16,6 +16,7 @@ import FormWordDeleteDialog from "../../components/words/maintenance/FormWordDel
 import { Toast } from 'primereact/toast';
 import { MessageService } from "../../types/general/MessageService";
 import { MSG_TYPE_SUCCESS } from "../../constants/general/ConstantsRoutes";
+import LayoutSidebar from "../../components/general/layout/LayoutSidebar";
 
 const WordsPage = () => {
     const [words, setWords] = useState<Word[]>([]);
@@ -46,7 +47,7 @@ const WordsPage = () => {
     
 
     return (
-        <>
+        <LayoutSidebar>
             <Toast ref={toast} />
             <div className="container">
                 <FormWordMaintenanceToolbar selectedWords={[]} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm}></FormWordMaintenanceToolbar>
@@ -54,7 +55,7 @@ const WordsPage = () => {
             </div>
             <FormWordMaintenanceDialog visible={visible} setWordDialogVisible={setWordDialogVisible} setWords={setWords} wordForm={wordForm} toast={toast} setWordForm={setWordForm}></FormWordMaintenanceDialog>
             <FormWordDeleteDialog deleteWordDialogVisible={deleteWordDialogVisible} setWords={setWords} setDeleteWordDialogVisible={setDeleteWordDialogVisible} toast={toast} wordForm={wordForm}></FormWordDeleteDialog>
-        </>
+        </LayoutSidebar>
     );
 }
 
