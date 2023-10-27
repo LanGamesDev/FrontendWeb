@@ -1,6 +1,5 @@
-// Layout.js
+import Sidebar from "../sidebar/bar/Sidebar";
 
-import Sidebar from "../sidebar/Sidebar";
 
 interface LayoutSidebarProps {
     children: any
