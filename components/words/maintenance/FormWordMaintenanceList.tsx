@@ -60,9 +60,9 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
     };
 
     return (
-        <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"}>
+        <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"} sortField="id" sortOrder={-1}>
             <Column body={buttonsTemplate} exportable={false} style={{ width: '8rem' }} header="Actions"></Column>
-            <Column field="id" header="ID"></Column>
+            <Column field="id" header="ID" sortable></Column>
             <Column field="content" header="Content"></Column>
         </DataTable>
     );
