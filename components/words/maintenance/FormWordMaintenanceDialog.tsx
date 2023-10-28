@@ -56,6 +56,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                     toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
                 }
             }
+            closeDialog();
         }
     });
 
@@ -128,7 +129,6 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
 
     const saveWord = async() => {
         await formik.submitForm();
-        closeDialog();
     }
     
     const productDialogFooter = (
