@@ -71,52 +71,62 @@ justify-content: space-between;
 display: block
 }
 .sidebar .nav-links li i{
-height: 50px;
-min-width: 78px;
-text-align: center;
-line-height: 50px;
-color: #fff;
-font-size: 20px;
-cursor: pointer;
-transition: all 0.3s ease;
+    height: 50px;
+    min-width: 78px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.3s ease;
 }
+
 .sidebar .nav-links li.showMenu i.arrow{
-transform: rotate(-180deg);
+    transform: rotate(-180deg);
 }
+
 .sidebar.close .nav-links i.arrow{
-display: none;
+    display: none;
 }
-.sidebar .nav-links li a{
-display: flex;
-align-items: center;
-text-decoration: none;
+
+.sidebar .nav-links li a,
+.sidebar .nav-links li div{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
 }
-.sidebar .nav-links li a .link_name{
-font-size: 18px;
-font-weight: 400;
-color: #fff;
-transition: all 0.4s ease;
+
+.sidebar .nav-links li a .link_name,
+.sidebar .nav-links li div .link_name{
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    transition: all 0.4s ease;
 }
+
 .sidebar.close .nav-links li a .link_name{
-opacity: 0;
-pointer-events: none;
+    opacity: 0;
+    pointer-events: none;
 }
+
 .sidebar .nav-links li .sub-menu{
-padding: 6px 6px 14px 80px;
-margin-top: -10px;
-background: #1d1b31;
-display: none;
+    padding: 6px 6px 14px 80px;
+    margin-top: -10px;
+    background: #1d1b31;
+    display: none;
 }
+
 .sidebar .nav-links li.showMenu .sub-menu{
-display: block;
+    display: block;
 }
+
 .sidebar .nav-links li .sub-menu a{
-color: #fff;
-font-size: 15px;
-padding: 5px 0;
-white-space: nowrap;
-opacity: 0.6;
-transition: all 0.3s ease;
+    color: #fff;
+    font-size: 15px;
+    padding: 5px 0;
+    white-space: nowrap;
+    opacity: 0.6;
+    transition: all 0.3s ease;
 }
 .sidebar .nav-links li .sub-menu a:hover{
 opacity: 1;
@@ -240,7 +250,6 @@ transition: all 0.5s ease;
 
 .home-section .home-content .bx-menu{
     margin: 0 15px;
-    cursor: pointer;
 }
 
 .home-section .home-content .text{
