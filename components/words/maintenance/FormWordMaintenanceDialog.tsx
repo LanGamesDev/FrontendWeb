@@ -8,7 +8,7 @@ import { Word } from '../../../types/words/Word';
 import {useEffect, useState, useRef} from 'react';
 import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
-import AccordionTranslate from './FormWordMaintenanceDialog/AccordionTranslate';
+import AccordionTranslate, { AccordionTranslateRef } from './FormWordMaintenanceDialog/AccordionTranslate';
 import { Translate } from '../../../types/words/Translate';
 import { STATE_TYPE_EDIT } from '../../../constants/general/ConstantsRoutes';
 
@@ -26,6 +26,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     const [typeForm, setTypeForm] = useState("");
     const [translates, setTranslates] = useState<Translate[]>([]);
     const deletedTranslates = useRef<Translate[]>([]);
+    const childComponentRef = useRef<AccordionTranslateRef>(null);
     
     const formik = useFormik({
         initialValues: {
@@ -44,19 +45,26 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             return errors;
         },
         onSubmit: async (data) => {
-            let result: boolean = false;
-            if(data.id === 0){
-                result = await createWord(data)
-                if(result === true){
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+            const validTranslate: boolean = childComponentRef.current!.validateCurrentTranslate();
+            if(validTranslate){
+
+                let result: boolean = false;
+                if(data.id === 0){
+                    result = await createWord(data)
+                    if(result === true){
+                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+                    }
+                }else{
+                    result = await updateWord(data)
+                    if(result === true){
+                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+                    }
                 }
+                closeDialog();
+
             }else{
-                result = await updateWord(data)
-                if(result === true){
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-                }
+                toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'You have a translate pending to save. ', life: 3000 });
             }
-            closeDialog();
         }
     });
 
@@ -144,19 +152,19 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
             <div className="flex justify-content-center">
                 <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
                     <div className="field">
-                        <label htmlFor="content" className="font-bold">
+                        <label htmlFor="content" className="font-bold" >
                             Content
                         </label>
                         <InputText id="content" value={formik.values?.content} onChange={(e) => {
                                     formik.setFieldValue('content', e.target.value);
-                                }} required autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} autoFocus={true}/>
+                                }} required autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} autoFocus={true} />
                         {getFormErrorMessage('content')}
                     </div>
                 </form>
             </div>
             <Accordion className="accordionSmall" activeIndex={0}>
                 <AccordionTab header="Translates" className="accordionTab">
-                    <AccordionTranslate toast={toast} translates={translates} setTranslates={setTranslates} formikWord={formik} deletedTranslates={deletedTranslates.current}></AccordionTranslate>
+                    <AccordionTranslate ref={childComponentRef} toast={toast} translates={translates} setTranslates={setTranslates} formikWord={formik} deletedTranslates={deletedTranslates.current}></AccordionTranslate>
                 </AccordionTab>
             </Accordion>
         </Dialog>
