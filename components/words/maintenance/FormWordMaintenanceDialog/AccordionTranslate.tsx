@@ -1,5 +1,5 @@
 import { AccordionTab } from 'primereact/accordion';
-import { useState } from 'react';
+import { forwardRef, useState, useImperativeHandle } from 'react';
 import { Translate } from '../../../../types/words/Translate';
 import { InputText } from 'primereact/inputtext';
 import { useFormik } from 'formik';
@@ -17,7 +17,11 @@ interface AccordionTranslateProps {
     deletedTranslates: Translate[]
 }
 
-const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTranslates, translates, formikWord, deletedTranslates}) => {
+export interface AccordionTranslateRef {
+    validateCurrentTranslate: () => boolean;
+}
+
+const AccordionTranslateComponent: React.ForwardRefRenderFunction<AccordionTranslateRef, AccordionTranslateProps> = ({toast, setTranslates, translates, formikWord, deletedTranslates}, ref) => {
     const [typeStateForm, setTypeStateForm] = useState(STATE_TYPE_NEW);
 
     const translateForm = useFormik({
@@ -58,6 +62,19 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
             </>
         );
     };
+
+    useImperativeHandle(ref, () => {
+        return {
+            validateCurrentTranslate() {
+                console.log(translateForm.values.content);
+                
+                if(translateForm.values.content !== ""){
+                    return false
+                } 
+                return true
+            }
+        };
+    }, [translateForm.values.content]);
 
     const editTranslate = (rowData: Translate) => {
 
@@ -136,7 +153,8 @@ const AccordionTranslate: React.FC<AccordionTranslateProps> = ({toast, setTransl
             </DataTable>
         </div>
     )
-    
 }
+
+const AccordionTranslate: any = forwardRef(AccordionTranslateComponent);
 
 export default AccordionTranslate
