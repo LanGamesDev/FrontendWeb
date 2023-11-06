@@ -43,7 +43,11 @@ const NewGame = () => {
             return errors;
         },
         onSubmit: async (data) => {
-
+            if(currentQuestion + 1 < questions.length){
+                changeCurrentQuestion(currentQuestion+1)
+            }else{
+                finishGame()
+            }
         }
     });
 
@@ -113,7 +117,6 @@ const NewGame = () => {
     };
 
     const backAnswering = async () => {
-        
         setStatus(STATE_TRANSLATEGAME_ANSWERING);
     };
 
