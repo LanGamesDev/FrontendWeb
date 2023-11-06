@@ -47,6 +47,13 @@ const NewGame = () => {
         }
     });
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     const fetchData = async () => {
         try{
             const response: MessageService = await getWordsForGame();
@@ -102,6 +109,7 @@ const NewGame = () => {
 
     const sendAnswers = async () => {
         setStatus(STATE_TRANSLATEGAME_SENDED);
+        scrollToTop();
     };
 
     const backAnswering = async () => {
