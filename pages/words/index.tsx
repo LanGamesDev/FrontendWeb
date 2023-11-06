@@ -4,11 +4,12 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primereact/resources/primereact.min.css";
 
-import React, { useState, useEffect, useRef } from 'react';
+//bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+import React, { useState, useEffect, useRef } from 'react';
 import { Word } from "../../types/words/Word";
 import FormWordMaintenanceList from "../../components/words/maintenance/FormWordMaintenanceList";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import getAllWords from "../../services/words/getAllWords";
 import FormWordMaintenanceToolbar from "../../components/words/maintenance/FormWordMaintenanceToolbar";
 import FormWordMaintenanceDialog from "../../components/words/maintenance/FormWordMaintenanceDialog";

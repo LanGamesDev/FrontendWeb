@@ -4,6 +4,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primereact/resources/primereact.min.css";
 
+//bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React, { useState, useEffect, useRef } from 'react';
 import LayoutSidebar from "../../../components/general/layout/LayoutSidebar";
 import FormTranslateGame from "../../../components/games/translateGame/FormTranslateGame";
