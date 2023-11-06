@@ -17,6 +17,7 @@ import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import TranslateGameResults from "../../../components/games/translateGame/TranslateGameResults";
 import { STATE_TRANSLATEGAME_ANSWERING, STATE_TRANSLATEGAME_PREVIEW, STATE_TRANSLATEGAME_SENDED } from "../../../constants/general/ConstantsForms";
+import FinalScoreGame from "../../../components/games/general/FinalScoreGame";
 
 const NewGame = () => {
 
@@ -113,15 +114,27 @@ const NewGame = () => {
         fetchData();
     }, []);
 
+    const validateAnswer = (question: Question): boolean => {
+        const findIndex: number = question.word.translates?.findIndex((translate)=>{
+            return translate.content?.trim().toLowerCase() === question.answer?.trim().toLowerCase()
+        })!;
+        
+        return findIndex >= 0 ? true : false;
+    }
+
     return (
         <LayoutSidebar>
             <Toast ref={toast} />
             <div className="container pt-5">
                 <h1 className="mb-4 text-center">Translate Game</h1>
                 {
+                    (status === STATE_TRANSLATEGAME_SENDED) &&
+                    <FinalScoreGame questions={questions} validateAnswer={validateAnswer}></FinalScoreGame>
+                }
+                {
                     (status === STATE_TRANSLATEGAME_ANSWERING) ?
                         <FormTranslateGame questions={questions} currentQuestion={currentQuestion} formik={formik}></FormTranslateGame>
-                    : <TranslateGameResults questions={questions} status={status}></TranslateGameResults>
+                    : <TranslateGameResults questions={questions} status={status} validateAnswer={validateAnswer}></TranslateGameResults>
                 }
                 <div className="d-flex justify-content-between">
                     {(status === STATE_TRANSLATEGAME_ANSWERING) && <Button label="Previous" icon="pi pi-times" outlined onClick={()=>{changeCurrentQuestion(currentQuestion-1)}} 
