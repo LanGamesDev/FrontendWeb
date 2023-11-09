@@ -43,3 +43,4 @@ List of requirements
 |002|TypeCRUDImplementation|X|X|X|-||
 |003|NewFieldTranslateWord|X|X|X|-||
 |004|FirstGameExactTranslate|X|X|X|-|004_FirstGameExactTranslate|
+|005|[FixFrontIssues](/docs/005_FixFrontIssues/005_FixFrontIssues.md)|X|||-|005_FixFrontIssues|
