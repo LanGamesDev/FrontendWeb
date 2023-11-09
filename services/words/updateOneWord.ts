@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Word } from "../../types/words/Word";
+import { ROUTE_API_LOCAL } from "../../constants/general/ConstantsRoutes";
 
 const updateOneWord = async(word: Word): Promise<Word> => {
     try {
-        const updatedWord: Word = await axios.put(`http://localhost:3001/api/words/${word.id}`, word).then(resp => {
+        const updatedWord: Word = await axios.put(`${ROUTE_API_LOCAL}words/${word.id}`, word).then(resp => {
             return resp.data;
         });
 

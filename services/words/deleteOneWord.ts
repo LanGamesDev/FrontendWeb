@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Word } from "../../types/words/Word";
+import { ROUTE_API_LOCAL } from "../../constants/general/ConstantsRoutes";
 
 const deleteOneWord = async(word: Word): Promise<Word> => {
     try {
-        const deletedWords: Word = await axios.delete(`http://localhost:3001/api/words/${word.id}`).then(resp => {
+        const deletedWords: Word = await axios.delete(`${ROUTE_API_LOCAL}words/${word.id}`).then(resp => {
             return resp.data;
         });
 

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { Word } from "../../types/words/Word";
 import { MessageService } from "../../types/general/MessageService";
-import { MSG_TYPE_ERROR, MSG_TYPE_SUCCESS } from "../../constants/general/ConstantsRoutes";
+import { MSG_TYPE_ERROR, MSG_TYPE_SUCCESS, ROUTE_API_LOCAL } from "../../constants/general/ConstantsRoutes";
 
 const getWordsForGame = async(): Promise<MessageService> => {
     try {
-        const words: Word[] = await axios.get('http://localhost:3001/api/words/getWordsForGame').then(resp => {
+        const words: Word[] = await axios.get(`${ROUTE_API_LOCAL}words/getWordsForGame`).then(resp => {
             return resp.data;
         })
         .catch(error => {

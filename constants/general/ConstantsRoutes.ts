@@ -1,4 +1,4 @@
-export const ROUTE_API_LOCAL = "http://localhost:3001/api/";
+export const ROUTE_API_LOCAL = "http://localhost:3002/api/";
 
 //Response types
 export const MSG_TYPE_SUCCESS: number = 1
