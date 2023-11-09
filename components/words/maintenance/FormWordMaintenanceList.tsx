@@ -60,7 +60,9 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
     };
 
     return (
-        <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"} sortField="id" sortOrder={-1}>
+        <DataTable value={words} tableStyle={{ minWidth: '50rem' }} size={"small"} sortField="id" sortOrder={-1}
+            paginator rows={15} rowsPerPageOptions={[15,30,50]} paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+            currentPageReportTemplate="{first} to {last} of {totalRecords}">
             <Column body={buttonsTemplate} exportable={false} style={{ width: '8rem' }} header="Actions"></Column>
             <Column field="id" header="ID" sortable></Column>
             <Column field="content" header="Content"></Column>
