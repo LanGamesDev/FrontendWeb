@@ -52,7 +52,7 @@ const NewGame = () => {
     });
 
     const scrollToTop = () => {
-        window.scrollTo({
+        document.getElementById("mainSection")!.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
