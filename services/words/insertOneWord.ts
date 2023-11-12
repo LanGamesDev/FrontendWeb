@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Word } from "../../types/words/Word";
-import { ROUTE_API_LOCAL } from "../../constants/general/ConstantsRoutes";
+import { ROUTE_API_LOCAL } from "../../utils/constants/general/ConstantsRoutes";
 
 const insertOneWord = async(word: Word): Promise<Word> => {
     try {

@@ -16,7 +16,7 @@ import FormWordMaintenanceDialog from "../../components/words/maintenance/FormWo
 import FormWordDeleteDialog from "../../components/words/maintenance/FormWordDeleteDialog";
 import { Toast } from 'primereact/toast';
 import { MessageService } from "../../types/general/MessageService";
-import { MSG_TYPE_SUCCESS } from "../../constants/general/ConstantsRoutes";
+import { MSG_TYPE_SUCCESS } from "../../utils/constants/general/ConstantsRoutes";
 import LayoutSidebar from "../../components/general/layout/LayoutSidebar";
 
 const WordsPage = () => {

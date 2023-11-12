@@ -5,7 +5,7 @@ import getAllWords from "../../../services/words/getAllWords";
 import { Word } from "../../../types/words/Word";
 import { Button } from "primereact/button";
 import { MessageService } from "../../../types/general/MessageService";
-import { MSG_TYPE_SUCCESS } from "../../../constants/general/ConstantsRoutes";
+import { MSG_TYPE_SUCCESS } from "../../../utils/constants/general/ConstantsRoutes";
 
 interface FormWordMaintenanceListProps {
     setWords: (data: any) => void,

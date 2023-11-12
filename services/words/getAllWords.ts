@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Word } from "../../types/words/Word";
 import { MessageService } from "../../types/general/MessageService";
-import { MSG_TYPE_ERROR, MSG_TYPE_SUCCESS, ROUTE_API_LOCAL } from "../../constants/general/ConstantsRoutes";
+import { MSG_TYPE_ERROR, MSG_TYPE_SUCCESS, ROUTE_API_LOCAL } from "../../utils/constants/general/ConstantsRoutes";
 
 const getAllWords = async(): Promise<MessageService> => {
     try {

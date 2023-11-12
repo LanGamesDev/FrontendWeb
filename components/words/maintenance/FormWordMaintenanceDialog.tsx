@@ -10,7 +10,7 @@ import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate, { AccordionTranslateRef } from './FormWordMaintenanceDialog/AccordionTranslate';
 import { Translate } from '../../../types/words/Translate';
-import { STATE_TYPE_EDIT } from '../../../constants/general/ConstantsRoutes';
+import { STATE_TYPE_EDIT } from '../../../utils/constants/general/ConstantsRoutes';
 
 interface FormWordMaintenanceDialogProps {
     setWords: (data: any) => void,
