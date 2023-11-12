@@ -122,6 +122,7 @@ const NewGame = () => {
 
     const newGame = async () => {
         await fetchData();
+        formik.setFieldValue('answer', "");
     };
     
     useEffect(() => {
