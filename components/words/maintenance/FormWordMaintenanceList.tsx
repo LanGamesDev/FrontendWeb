@@ -6,6 +6,7 @@ import { Word } from "../../../types/words/Word";
 import { Button } from "primereact/button";
 import { MessageService } from "../../../types/general/MessageService";
 import { MSG_TYPE_SUCCESS } from "../../../utils/constants/general/ConstantsRoutes";
+import { formatDate } from "../../../utils/functions/general/stringsHandle";
 
 interface FormWordMaintenanceListProps {
     setWords: (data: any) => void,
@@ -22,7 +23,6 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
         const fetchData = async () => {
             try{
                 const response: MessageService = await getAllWords();
-                console.log(response);
                 
                 if(response.type === MSG_TYPE_SUCCESS){
                     setWords(response.data);
@@ -64,8 +64,9 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
             paginator rows={15} rowsPerPageOptions={[15,30,50]} paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
             currentPageReportTemplate="{first} to {last} of {totalRecords}">
             <Column body={buttonsTemplate} exportable={false} style={{ width: '8rem' }} header="Actions"></Column>
-            <Column field="id" header="ID" sortable></Column>
+            <Column field="id" style={{ width: '8rem' }} header="ID" sortable></Column>
             <Column field="content" header="Content"></Column>
+            <Column field="createdDate" header="Creation Date" body={(rowData) => formatDate(rowData.createdDate)}></Column>
         </DataTable>
     );
 }
