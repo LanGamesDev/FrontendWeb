@@ -66,8 +66,6 @@ const AccordionTranslateComponent: React.ForwardRefRenderFunction<AccordionTrans
     useImperativeHandle(ref, () => {
         return {
             validateCurrentTranslate() {
-                console.log(translateForm.values.content);
-                
                 if(translateForm.values.content !== ""){
                     return false
                 } 

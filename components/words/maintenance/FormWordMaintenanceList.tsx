@@ -22,8 +22,6 @@ const FormWordMaintenanceList: React.FC<FormWordMaintenanceListProps> = ({setWor
         const fetchData = async () => {
             try{
                 const response: MessageService = await getAllWords();
-                console.log(response);
-                
                 if(response.type === MSG_TYPE_SUCCESS){
                     setWords(response.data);
                 }
