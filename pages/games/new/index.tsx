@@ -141,8 +141,8 @@ const NewGame = () => {
     return (
         <LayoutSidebar>
             <Toast ref={toast} />
-            <div className="container pt-5">
-                <h1 className="mb-4 text-center">Translate Game</h1>
+            <div className="container pt-4">
+                <h1 className="mb-4 text-center">Translation Game</h1>
                 {
                     (status === STATE_TRANSLATEGAME_SENDED) &&
                     <FinalScoreGame questions={questions} validateAnswer={validateAnswer}></FinalScoreGame>
