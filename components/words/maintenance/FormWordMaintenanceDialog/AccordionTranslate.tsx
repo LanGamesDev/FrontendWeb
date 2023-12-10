@@ -7,7 +7,7 @@ import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { STATE_TYPE_EDIT, STATE_TYPE_NEW } from '../../../../constants/general/ConstantsRoutes';
+import { STATE_TYPE_EDIT, STATE_TYPE_NEW } from '../../../../utils/constants/general/ConstantsRoutes';
 
 interface AccordionTranslateProps {
     toast: any

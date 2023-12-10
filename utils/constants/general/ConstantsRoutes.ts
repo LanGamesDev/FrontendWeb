@@ -1,3 +1,4 @@
+//Routes
 export const ROUTE_API_LOCAL = process.env.NEXT_PUBLIC_ROUTE_API_LOCAL;
 export const ROUTE_API_SERVER = process.env.ROUTE_API_SERVER;
 

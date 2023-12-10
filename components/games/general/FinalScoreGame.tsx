@@ -1,4 +1,4 @@
-import { COLOR_RESULT_DANGER, COLOR_RESULT_SUCCESS, COLOR_RESULT_WARNING } from "../../../constants/general/ConstantsForms";
+import { COLOR_RESULT_DANGER, COLOR_RESULT_SUCCESS, COLOR_RESULT_WARNING } from "../../../utils/constants/general/ConstantsForms";
 import { Question } from "../../../types/words/Question";
 import { Knob } from 'primereact/knob';
 

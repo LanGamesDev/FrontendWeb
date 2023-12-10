@@ -1,7 +1,7 @@
 import { Panel } from "primereact/panel";
 import { Question } from '../../../types/words/Question';
 import { InputText } from "primereact/inputtext";
-import { STATE_TRANSLATEGAME_SENDED } from "../../../constants/general/ConstantsForms";
+import { STATE_TRANSLATEGAME_SENDED } from "../../../utils/constants/general/ConstantsForms";
 import { Fieldset } from 'primereact/fieldset';
 
 interface TranslateGameResultsProps {

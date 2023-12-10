@@ -10,7 +10,7 @@ import updateOneWord from '../../../services/words/updateOneWord';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AccordionTranslate, { AccordionTranslateRef } from './FormWordMaintenanceDialog/AccordionTranslate';
 import { Translate } from '../../../types/words/Translate';
-import { STATE_TYPE_EDIT } from '../../../constants/general/ConstantsRoutes';
+import { STATE_TYPE_EDIT } from '../../../utils/constants/general/ConstantsRoutes';
 
 interface FormWordMaintenanceDialogProps {
     setWords: (data: any) => void,
@@ -18,10 +18,11 @@ interface FormWordMaintenanceDialogProps {
     visible: boolean
     wordForm?: Word
     toast: any,
-    setWordForm: (data: Word) => void
+    setWordForm: (data: Word) => void,
+    globalContext: string
 }
 
-const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast,setWordForm}) => {
+const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast,setWordForm,globalContext}) => {
 
     const [typeForm, setTypeForm] = useState("");
     const [translates, setTranslates] = useState<Translate[]>([]);
@@ -29,11 +30,15 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     const childComponentRef = useRef<AccordionTranslateRef>(null);
     
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             id: 0,
             content: '',
+            context: globalContext,
             translates: [] as Translate[],
-            deletedTranslates: [] as Translate[]
+            deletedTranslates: [] as Translate[],
+            createdDate: null as unknown as Date,
+            updatedDate: null as unknown as Date
         },
         validate: (data) => {
             let errors: Word = {};
@@ -69,12 +74,17 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     });
 
     useEffect(() => {
+        
         if (wordForm && wordForm.id !== formik.values.id) {
+            
             formik.setValues({
                 id: wordForm.id || 0,
                 content: wordForm.content || '',
+                context: wordForm.context || '',
                 translates: wordForm.translates || [],
-                deletedTranslates: []
+                deletedTranslates: [],
+                createdDate: new Date(),
+                updatedDate: new Date()
             });
 
             setTranslates(wordForm.translates!.map(translate => {
@@ -122,12 +132,6 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         return false;
     };
 
-    const isFormFieldInvalid = (name: keyof Word) => !!(formik.touched[name] && formik.errors[name]);
-
-    const getFormErrorMessage = (name: keyof Word) => {
-        return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]?.toString()}</small> : <small className="p-error">&nbsp;</small>;
-    };
-
     const closeDialog = () => {
         formik.resetForm();
         setWordDialogVisible(false);
@@ -146,19 +150,28 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         </>
     );
     
-
+    
     return (
         <Dialog header={(typeForm === "E") ? "Edit Word" : "Create word"} visible={visible} maximizable style={{ width: '50vw' }} onHide={() => closeDialog()} footer={productDialogFooter}>
-            <div className="flex justify-content-center">
+            <div className="flex justify-content-center mb-3">
                 <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
-                    <div className="field">
-                        <label htmlFor="content" className="font-bold" >
-                            Content
-                        </label>
-                        <InputText id="content" value={formik.values?.content} onChange={(e) => {
-                                    formik.setFieldValue('content', e.target.value);
-                                }} required autoComplete='off' className={`form-control ${classNames({ 'p-invalid': isFormFieldInvalid('content') })}`} autoFocus={true} />
-                        {getFormErrorMessage('content')}
+                    <div className='row'>
+                        <div className="field col-6">
+                            <label htmlFor="content" className="font-bold" >
+                                Content
+                            </label>
+                            <InputText id="content" value={formik.values?.content} onChange={(e) => {
+                                        formik.setFieldValue('content', e.target.value);
+                                    }} required autoComplete='off' className={`form-control`} autoFocus={true} />
+                        </div>
+                        <div className="field col-6">
+                            <label htmlFor="context" className="font-bold" >
+                                Context
+                            </label>
+                            <InputText id="context" value={formik.values?.context} onChange={(e) => {
+                                        formik.setFieldValue('context', e.target.value);
+                                    }} required autoComplete='off' className={`form-control`} />
+                        </div>
                     </div>
                 </form>
             </div>

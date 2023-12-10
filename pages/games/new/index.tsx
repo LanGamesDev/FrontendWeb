@@ -11,7 +11,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import LayoutSidebar from "../../../components/general/layout/LayoutSidebar";
 import FormTranslateGame from "../../../components/games/translateGame/FormTranslateGame";
 import { MessageService } from "../../../types/general/MessageService";
-import { MSG_TYPE_SUCCESS } from "../../../constants/general/ConstantsRoutes";
+import { MSG_TYPE_SUCCESS } from "../../../utils/constants/general/ConstantsRoutes";
 import { Toast } from "primereact/toast";
 import getWordsForGame from "../../../services/words/getWordsForGame";
 import { Question } from "../../../types/words/Question";
@@ -19,8 +19,9 @@ import { Word } from "../../../types/words/Word";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import TranslateGameResults from "../../../components/games/translateGame/TranslateGameResults";
-import { STATE_TRANSLATEGAME_ANSWERING, STATE_TRANSLATEGAME_PREVIEW, STATE_TRANSLATEGAME_SENDED } from "../../../constants/general/ConstantsForms";
+import { STATE_TRANSLATEGAME_ANSWERING, STATE_TRANSLATEGAME_PREVIEW, STATE_TRANSLATEGAME_SENDED } from "../../../utils/constants/general/ConstantsForms";
 import FinalScoreGame from "../../../components/games/general/FinalScoreGame";
+import { removeAccents } from "../../../utils/functions/general/stringsHandle";
 
 const NewGame = () => {
 
@@ -52,7 +53,7 @@ const NewGame = () => {
     });
 
     const scrollToTop = () => {
-        window.scrollTo({
+        document.getElementById("mainSection")!.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
@@ -122,6 +123,7 @@ const NewGame = () => {
 
     const newGame = async () => {
         await fetchData();
+        formik.setFieldValue('answer', "");
     };
     
     useEffect(() => {
@@ -130,7 +132,7 @@ const NewGame = () => {
 
     const validateAnswer = (question: Question): boolean => {
         const findIndex: number = question.word.translates?.findIndex((translate)=>{
-            return translate.content?.trim().toLowerCase() === question.answer?.trim().toLowerCase()
+            return removeAccents(translate.content?.trim().toLowerCase()!) === removeAccents(question.answer?.trim().toLowerCase()!)
         })!;
         
         return findIndex >= 0 ? true : false;
@@ -139,8 +141,8 @@ const NewGame = () => {
     return (
         <LayoutSidebar>
             <Toast ref={toast} />
-            <div className="container pt-5">
-                <h1 className="mb-4 text-center">Translate Game</h1>
+            <div className="container pt-4">
+                <h1 className="mb-4 text-center">Translation Game</h1>
                 {
                     (status === STATE_TRANSLATEGAME_SENDED) &&
                     <FinalScoreGame questions={questions} validateAnswer={validateAnswer}></FinalScoreGame>

@@ -9,7 +9,7 @@ const LayoutSidebar: React.FC<LayoutSidebarProps> = ({ children }) => {
   return (
     <div>
       <Sidebar />
-      <main className="home-section">{children}</main>
+      <main id="mainSection" className="home-section">{children}</main>
     </div>
   );
 };
