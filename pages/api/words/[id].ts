@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Word } from '../../../types/words/Word';
 import axios from 'axios';
-import { ROUTE_API_SERVER } from '../../../constants/general/ConstantsRoutes';
+import { ROUTE_API_SERVER } from '../../../utils/constants/general/ConstantsRoutes';
  
 type ResponseData = Word
  
