@@ -42,6 +42,17 @@ const WordsPage = () => {
 
         }
     };
+
+    const getUniqueContexts = (): string[] => {
+        const stored: Set<string> = words.reduce((list, item)=>{
+            if(item.context){
+                list.add(item.context)
+            }
+            
+            return list;
+        }, new Set<string>());
+        return Array.from(stored)
+    }
     
     useEffect(() => {
         fetchData();
@@ -59,6 +70,7 @@ const WordsPage = () => {
                     setWordForm={setWordForm}
                     context={context}
                     setContext={setContext}
+                    uniqueContexts={getUniqueContexts()}
                 ></FormWordMaintenanceToolbar>
                 <FormWordMaintenanceList setWords={setWords} words={words} setWordDialogVisible={setWordDialogVisible} setWordForm={setWordForm} setDeleteWordDialogVisible={setDeleteWordDialogVisible}></FormWordMaintenanceList>
             </div>
