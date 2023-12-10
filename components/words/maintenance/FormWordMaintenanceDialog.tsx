@@ -18,10 +18,11 @@ interface FormWordMaintenanceDialogProps {
     visible: boolean
     wordForm?: Word
     toast: any,
-    setWordForm: (data: Word) => void
+    setWordForm: (data: Word) => void,
+    globalContext: string
 }
 
-const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast,setWordForm}) => {
+const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({setWords,setWordDialogVisible,visible,wordForm,toast,setWordForm,globalContext}) => {
 
     const [typeForm, setTypeForm] = useState("");
     const [translates, setTranslates] = useState<Translate[]>([]);
@@ -29,10 +30,11 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     const childComponentRef = useRef<AccordionTranslateRef>(null);
     
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             id: 0,
             content: '',
-            context: '',
+            context: globalContext,
             translates: [] as Translate[],
             deletedTranslates: [] as Translate[],
             createdDate: null as unknown as Date,
@@ -72,7 +74,9 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     });
 
     useEffect(() => {
+        
         if (wordForm && wordForm.id !== formik.values.id) {
+            
             formik.setValues({
                 id: wordForm.id || 0,
                 content: wordForm.content || '',
@@ -146,7 +150,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
         </>
     );
     
-
+    
     return (
         <Dialog header={(typeForm === "E") ? "Edit Word" : "Create word"} visible={visible} maximizable style={{ width: '50vw' }} onHide={() => closeDialog()} footer={productDialogFooter}>
             <div className="flex justify-content-center mb-3">
