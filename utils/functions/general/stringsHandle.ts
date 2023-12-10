@@ -42,6 +42,7 @@ interface DateTimeFormatOptions {
 }
 
 export const formatDate = (dateString: string) => {
+    
     const options: DateTimeFormatOptions = {
         year: 'numeric',
         month: '2-digit',
@@ -52,5 +53,11 @@ export const formatDate = (dateString: string) => {
         hour12: false,
         timeZone: 'UTC'
     };
-    return new Intl.DateTimeFormat('es-ES', options).format(new Date(dateString));
+
+    if(dateString){
+        return new Intl.DateTimeFormat('es-ES', options).format(new Date(dateString));
+    }else{
+        return '';
+    }
+
 };
