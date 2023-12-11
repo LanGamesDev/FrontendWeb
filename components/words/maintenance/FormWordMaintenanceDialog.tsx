@@ -152,11 +152,11 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
     
     
     return (
-        <Dialog header={(typeForm === "E") ? "Edit Word" : "Create word"} visible={visible} maximizable style={{ width: '50vw' }} onHide={() => closeDialog()} footer={productDialogFooter}>
+        <Dialog header={(typeForm === "E") ? "Edit Word" : "Create word"} visible={visible} maximizable className='dialog-responsive' onHide={() => closeDialog()} footer={productDialogFooter}>
             <div className="flex justify-content-center mb-3">
                 <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
                     <div className='row'>
-                        <div className="field col-6">
+                        <div className="field col-md-6 col-sm-12">
                             <label htmlFor="content" className="font-bold" >
                                 Content
                             </label>
@@ -164,7 +164,7 @@ const FormWordMaintenanceDialog: React.FC<FormWordMaintenanceDialogProps> = ({se
                                         formik.setFieldValue('content', e.target.value);
                                     }} required autoComplete='off' className={`form-control`} autoFocus={true} />
                         </div>
-                        <div className="field col-6">
+                        <div className="field col-md-6 col-sm-12">
                             <label htmlFor="context" className="font-bold" >
                                 Context
                             </label>
