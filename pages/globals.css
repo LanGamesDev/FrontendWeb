@@ -15,3 +15,13 @@
 .inputSmall{
   padding: 0rem 0.5rem !important;
 }
+
+.dialog-responsive{
+  width: 50vw;
+}
+
+@media (max-width: 480px) {
+  .dialog-responsive{
+    width: 90vw;
+  }
+}
